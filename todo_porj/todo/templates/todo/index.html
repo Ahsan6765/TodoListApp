@@ -1,0 +1,368 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #010a20, #95c33a);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            /* background: #060000; */
+            background: linear-gradient(135deg, #010a20, #3b68e4);
+
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            width: 90%;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button.add {
+            background-color: #28a745;
+            width: 60%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button.add:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        button.complete {
+            background-color: #007bff;
+        }
+
+        button.complete:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button.delete {
+            background-color: #dc3545;
+        }
+
+        button.delete:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background: #f8f9fa;
+            color: #212529;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #e2e6ea;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Add a new task" required>
+            <button type="submit" name="add-task" class="add">Add Task</button>
+        </form>
+        <br>
+    </div>
+    
+    <div class="container">
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <form method="POST" style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                    {% csrf_token %}
+                    <input type="hidden" name="task-id" value="{{ task.id }}">
+                    <span class="{% if task.completed %}completed{% endif %}">
+                        {{ task.title }}
+                    </span>
+                    <button type="submit" name="complete-task" class="complete">
+                        {% if task.completed %}Undo{% else %}Complete{% endif %}
+                    </button>
+                    <button type="submit" name="delete-task" class="delete">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+        
+    
+</body>
+</html> -->
+
+
+<!-- // ================================================== -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #010a20, #95c33a);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 90%;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        button.add {
+            background-color: #28a745;
+        }
+
+        button.add:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        button.complete {
+            background-color: #007bff;
+        }
+
+        button.complete:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button.delete {
+            background-color: #dc3545;
+        }
+
+        button.delete:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        li {
+            background: #f8f9fa;
+            color: #212529;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        li:hover {
+            background-color: #e2e6ea;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        .task-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-actions button {
+            width: auto;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            input[type="text"] {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div class="container-wrapper">
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="title" placeholder="Add a new task" required>
+                <button type="submit" name="add-task" class="add">Add Task</button>
+            </form>
+        </div>
+
+        <div class="container">
+            <h1 style="color: #010a20;">My Tasks</h1>
+            <ul>
+                {% for task in tasks %}
+                <li>
+                    <form method="POST" class="task-actions">
+                        {% csrf_token %}
+                        <input type="hidden" name="task-id" value="{{ task.id }}">
+                        <span class="{% if task.completed %}completed{% endif %}">
+                            {{ task.title }}
+                        </span>
+                        <button type="submit" name="complete-task" class="complete">
+                            {% if task.completed %}Undo{% else %}Complete{% endif %}
+                        </button>
+                        <button type="submit" name="delete-task" class="delete">Delete</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
